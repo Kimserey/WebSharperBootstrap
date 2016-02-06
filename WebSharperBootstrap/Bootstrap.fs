@@ -340,75 +340,60 @@ module Bootstrap =
         NavTabType: NavTabType
         IsJustified: bool
     } with
-        static member Create(tabs) =
-            { Tabs = tabs
+        static member Create() =
+            { Tabs = []
               NavTabType = NavTabType.Normal
               IsJustified = false }
-        static member Create(tabs, navTabType) =
-            { Tabs = tabs
-              NavTabType = navTabType
-              IsJustified = false }
         /// Renders the menu of the tabs.
-        static member RenderNav x =
+        static member RenderTabs x =
             ulAttr [ attr.``class`` ("nav "
                                      + (if x.IsJustified then "nav-justified " else "")
                                      + (match x.NavTabType with 
                                         | Normal -> "nav-tabs" 
                                         | Pill Horizontal -> "nav-pills"
                                         | Pill Vertical -> "nav-pills nav-stacked")) ]
-                   (x.Tabs |> List.map NavTab.RenderNavItem |> Seq.cast)
-        member x.RenderNav() = NavTabs.RenderNav x
+                   (x.Tabs |> List.map NavTab.RenderTab |> Seq.cast)
+        member x.RenderNav() = NavTabs.RenderTabs x
         /// Renders the content link to the tabs.
         static member RenderContent x =
             divAttr [ attr.``class`` "tab-content" ] (x.Tabs |> List.map NavTab.RenderContent |> Seq.cast)
         member x.RenderContent() = NavTabs.RenderContent x
-        member x.Justified() = { x with IsJustified = true }
+        member x.WithTabs tabs = { x with Tabs = tabs }
+        member x.WithType ty = { x with NavTabType = ty }
+        member x.Justify isJustified = { x with IsJustified = isJustified }
     and NavTab = {
         Id: string
         Title: string
         Content: Doc
-        NavTabState: NavTabState 
+        State: NavTabState 
     } with
-        static member Create(id, title) =
+        static member Create id =
             { Id = id
-              Title = title
+              Title = ""
               Content = Doc.Empty
-              NavTabState = NavTabState.Normal }
-        static member Create(id, title, state) =
-            { Id = id
-              Title = title
-              Content = Doc.Empty
-              NavTabState = state }
-        static member Create(id, title, content) =
-            { Id = id
-              Title = title
-              Content = content
-              NavTabState = NavTabState.Normal }
-        static member Create(id, title, content, state) =
-            { Id = id
-              Title = title
-              Content = content
-              NavTabState = state }
-        static member RenderNavItem x =
+              State = NavTabState.Normal }
+        static member RenderTab x =
             liAttr [ attr.role "presentation"
-                     attr.``class`` (match x.NavTabState with
+                     attr.``class`` (match x.State with
                                      | NavTabState.Normal -> ""
                                      | NavTabState.Active -> "active"
                                      | NavTabState.Disabled -> "disabled") ] 
-                   [ (match x.NavTabState with
+                   [ (match x.State with
                       | NavTabState.Disabled -> Hyperlink.Create(Href "#", x.Title)
                       | _ ->  Hyperlink.Create(Href <| "#" + x.Id, x.Title)
                                        .WithRole("tab")
                                        .WithDataToggle("tab")
                       ).Render() ]
-        member x.RenderNavItem() = NavTab.RenderNavItem x
+        member x.RenderTab() = NavTab.RenderTab x
         static member RenderContent x =
             divAttr [ attr.role "tabpanel"
                       attr.id x.Id
-                      attr.``class`` (match x.NavTabState with NavTabState.Active -> "tab-pane fade in active" | _ -> "tab-content tab-pane fade") ]
+                      attr.``class`` (match x.State with NavTabState.Active -> "tab-pane fade in active" | _ -> "tab-content tab-pane fade") ]
                     [ x.Content ]
-        member x.WithContent doc = { x with Content = doc }
         member x.RenderContent() = NavTab.RenderContent x
+        member x.WithContent doc = { x with Content = doc }
+        member x.WithTitle title = { x with Title = title }
+        member x.WithState state = { x with State = state }
     and NavTabState =
         | Normal
         | Active

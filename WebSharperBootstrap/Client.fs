@@ -55,12 +55,26 @@ module Client =
                 DescriptionOrientation.Horizontal)
 
         let tabs =
-            NavTabs.Create(
-                [ NavTab.Create("home", "Home", text "Home page here.", NavTabState.Active)
-                  NavTab.Create("account", "Account", text "Account page here.")
-                  NavTab.Create("profile", "Profile", text "Profile page here.")
-                  NavTab.Create("hello", "Hello", Doc.Empty, NavTabState.Disabled) ],
-                NavTabType.Pill PillStack.Horizontal)
+            NavTabs.Create()
+                   .Justify(true)
+                   .WithType(Pill Vertical)
+                   .WithTabs(
+                        [ NavTab.Create("home")
+                                .WithTitle("Home")
+                                .WithContent(text "Home page here.")
+                                .WithState(NavTabState.Active)
+
+                          NavTab.Create("account")
+                                .WithTitle("Account")
+                                .WithContent(text "Account page here.")
+                  
+                          NavTab.Create("profile")
+                                .WithTitle("Profile")
+                                .WithContent(text "Profile page here.")
+
+                          NavTab.Create("hello")
+                                .WithTitle("Hello")
+                                .WithState(NavTabState.Disabled) ])
 
         let pagination =
             Pagination.Create(
