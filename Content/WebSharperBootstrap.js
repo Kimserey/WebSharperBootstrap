@@ -18787,23 +18787,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       return Container.Render(this);
      }
     },{
-     Create:function(containerType)
-     {
-      return Runtime.New(Container,{
-       Content:Runtime.New(T,{
-        $:0
-       }),
-       ContainerType:containerType
-      });
-     },
-     Create1:function(content,containerType)
-     {
-      return Runtime.New(Container,{
-       Content:content,
-       ContainerType:containerType
-      });
-     },
-     Create2:function()
+     Create:function()
      {
       return Runtime.New(Container,{
        Content:Runtime.New(T,{
@@ -18812,6 +18796,22 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        ContainerType:{
         $:0
        }
+      });
+     },
+     Create1:function(containerType)
+     {
+      return Runtime.New(Container,{
+       Content:Runtime.New(T,{
+        $:0
+       }),
+       ContainerType:containerType
+      });
+     },
+     Create2:function(content,containerType)
+     {
+      return Runtime.New(Container,{
+       Content:content,
+       ContainerType:containerType
       });
      },
      Render:function(x)
@@ -18862,22 +18862,22 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       return DescriptionTerm.Render(this);
      }
     },{
-     Create:function(term,description)
+     Create:function(term)
+     {
+      return Runtime.New(DescriptionTerm,{
+       Term:term,
+       Description:{
+        $:2
+       }
+      });
+     },
+     Create1:function(term,description)
      {
       return Runtime.New(DescriptionTerm,{
        Term:term,
        Description:{
         $:1,
         $0:description
-       }
-      });
-     },
-     Create1:function(term)
-     {
-      return Runtime.New(DescriptionTerm,{
-       Term:term,
-       Description:{
-        $:2
        }
       });
      },
@@ -19683,9 +19683,9 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
      {
       return NavTab.RenderContent(this);
      },
-     RenderNavItem:function()
+     RenderTab:function()
      {
-      return NavTab.RenderNavItem(this);
+      return NavTab.RenderTab(this);
      },
      WithContent:function(doc)
      {
@@ -19693,46 +19693,35 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Id:this.Id,
        Title:this.Title,
        Content:doc,
-       NavTabState:this.NavTabState
+       State:this.State
+      });
+     },
+     WithState:function(state)
+     {
+      return Runtime.New(NavTab,{
+       Id:this.Id,
+       Title:this.Title,
+       Content:this.Content,
+       State:state
+      });
+     },
+     WithTitle:function(title)
+     {
+      return Runtime.New(NavTab,{
+       Id:this.Id,
+       Title:title,
+       Content:this.Content,
+       State:this.State
       });
      }
     },{
-     Create:function(id,title,content,state)
+     Create:function(id)
      {
       return Runtime.New(NavTab,{
        Id:id,
-       Title:title,
-       Content:content,
-       NavTabState:state
-      });
-     },
-     Create1:function(id,title,state)
-     {
-      return Runtime.New(NavTab,{
-       Id:id,
-       Title:title,
+       Title:"",
        Content:Doc.get_Empty(),
-       NavTabState:state
-      });
-     },
-     Create2:function(id,title,content)
-     {
-      return Runtime.New(NavTab,{
-       Id:id,
-       Title:title,
-       Content:content,
-       NavTabState:{
-        $:0
-       }
-      });
-     },
-     Create3:function(id,title)
-     {
-      return Runtime.New(NavTab,{
-       Id:id,
-       Title:title,
-       Content:Doc.get_Empty(),
-       NavTabState:{
+       State:{
         $:0
        }
       });
@@ -19740,15 +19729,15 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
      RenderContent:function(x)
      {
       var matchValue;
-      matchValue=x.NavTabState;
+      matchValue=x.State;
       return Doc.Element("div",List.ofArray([Bootstrap["attr.role.Static"]("tabpanel"),AttrProxy.Create("id",x.Id),AttrProxy.Create("class",matchValue.$==1?"tab-pane fade in active":"tab-content tab-pane fade")]),List.ofArray([x.Content]));
      },
-     RenderNavItem:function(x)
+     RenderTab:function(x)
      {
       var ats,matchValue,matchValue1,_,arg0;
-      matchValue=x.NavTabState;
+      matchValue=x.State;
       ats=List.ofArray([Bootstrap["attr.role.Static"]("presentation"),AttrProxy.Create("class",matchValue.$==1?"active":matchValue.$==2?"disabled":"")]);
-      matchValue1=x.NavTabState;
+      matchValue1=x.State;
       if(matchValue1.$==2)
        {
         _=Hyperlink.Create1({
@@ -19768,12 +19757,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
      }
     }),
     NavTabs:Runtime.Class({
-     Justified:function()
+     Justify:function(isJustified)
      {
       return Runtime.New(NavTabs,{
        Tabs:this.Tabs,
        NavTabType:this.NavTabType,
-       IsJustified:true
+       IsJustified:isJustified
       });
      },
      RenderContent:function()
@@ -19782,21 +19771,31 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
      },
      RenderNav:function()
      {
-      return NavTabs.RenderNav(this);
-     }
-    },{
-     Create:function(tabs,navTabType)
+      return NavTabs.RenderTabs(this);
+     },
+     WithTabs:function(tabs)
      {
       return Runtime.New(NavTabs,{
        Tabs:tabs,
-       NavTabType:navTabType,
-       IsJustified:false
+       NavTabType:this.NavTabType,
+       IsJustified:this.IsJustified
       });
      },
-     Create1:function(tabs)
+     WithType:function(ty)
      {
       return Runtime.New(NavTabs,{
-       Tabs:tabs,
+       Tabs:this.Tabs,
+       NavTabType:ty,
+       IsJustified:this.IsJustified
+      });
+     }
+    },{
+     Create:function()
+     {
+      return Runtime.New(NavTabs,{
+       Tabs:Runtime.New(T,{
+        $:0
+       }),
        NavTabType:{
         $:0
        },
@@ -19815,12 +19814,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       source=List.map(mapping,list);
       return Doc.Element("div",arg10,source);
      },
-     RenderNav:function(x)
+     RenderTabs:function(x)
      {
       var mapping,arg10,matchValue,list,source;
       mapping=function(arg00)
       {
-       return NavTab.RenderNavItem(arg00);
+       return NavTab.RenderTab(arg00);
       };
       matchValue=x.NavTabType;
       arg10=List.ofArray([AttrProxy.Create("class","nav "+(x.IsJustified?"nav-justified ":"")+(matchValue.$==1?matchValue.$0.$==1?"nav-pills nav-stacked":"nav-pills":"nav-tabs"))]);
@@ -19861,20 +19860,20 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       return PaginationListItem.Render(this);
      }
     },{
-     Create:function(link)
+     Create:function(link,state)
+     {
+      return Runtime.New(PaginationListItem,{
+       Link:link,
+       PaginationListItemState:state
+      });
+     },
+     Create1:function(link)
      {
       return Runtime.New(PaginationListItem,{
        Link:link,
        PaginationListItemState:{
         $:0
        }
-      });
-     },
-     Create1:function(link,state)
-     {
-      return Runtime.New(PaginationListItem,{
-       Link:link,
-       PaginationListItemState:state
       });
      },
      Render:function(x)
@@ -20013,40 +20012,40 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
      arg202=List.ofArray([Doc.TextNode("Hehe ")]);
      arg203=List.ofArray([Doc.TextNode("hoho")]);
      arg201=List.ofArray([Doc.Element("strong",[],arg202),Doc.Element("small",[],arg203)]);
-     descriptionList=DescriptionList.Create(List.ofArray([DescriptionTerm.Create("Description","Something cool is happening."),DescriptionTerm.Create("Computer","Super super super computer."),DescriptionTerm.Create2("Custom div",Doc.Element("p",[],arg201))]),{
+     descriptionList=DescriptionList.Create(List.ofArray([DescriptionTerm.Create1("Description","Something cool is happening."),DescriptionTerm.Create1("Computer","Super super super computer."),DescriptionTerm.Create2("Custom div",Doc.Element("p",[],arg201))]),{
       $:0
      });
-     tabs=NavTabs.Create(List.ofArray([NavTab.Create("home","Home",Doc.TextNode("Home page here."),{
-      $:1
-     }),NavTab.Create2("account","Account",Doc.TextNode("Account page here.")),NavTab.Create2("profile","Profile",Doc.TextNode("Profile page here.")),NavTab.Create("hello","Hello",Doc.get_Empty(),{
-      $:2
-     })]),{
+     tabs=NavTabs.Create().WithType({
       $:1,
       $0:{
-       $:0
+       $:1
       }
-     });
-     pagination=Pagination.Create(List.ofArray([PaginationListItem.Create1(Hyperlink.Create1({
+     }).WithTabs(List.ofArray([NavTab.Create("home").WithTitle("Home").WithContent(Doc.TextNode("Home page here.")).WithState({
+      $:1
+     }),NavTab.Create("account").WithTitle("Account").WithContent(Doc.TextNode("Account page here.")),NavTab.Create("profile").WithTitle("Profile").WithContent(Doc.TextNode("Profile page here.")),NavTab.Create("hello").WithTitle("Hello").WithState({
+      $:2
+     })]));
+     pagination=Pagination.Create(List.ofArray([PaginationListItem.Create(Hyperlink.Create1({
       $:0,
       $0:"#"
      },"Previous"),{
       $:2
-     }),PaginationListItem.Create1(Hyperlink.Create1({
+     }),PaginationListItem.Create(Hyperlink.Create1({
       $:0,
       $0:"#"
      },"1"),{
       $:1
-     }),PaginationListItem.Create(Hyperlink.Create1({
+     }),PaginationListItem.Create1(Hyperlink.Create1({
       $:0,
       $0:"#"
-     },"2")),PaginationListItem.Create(Hyperlink.Create1({
+     },"2")),PaginationListItem.Create1(Hyperlink.Create1({
       $:0,
       $0:"#"
-     },"3")),PaginationListItem.Create(Hyperlink.Create1({
+     },"3")),PaginationListItem.Create1(Hyperlink.Create1({
       $:0,
       $0:"#"
      },"Next"))]));
-     return Doc.RunById("main",Doc.Concat(List.ofArray([_fork_me_on_github,Container.Render(Container.Create1(List.ofArray([rowButtons.Render(),breadcrumbBar.Render(),rowBreadcrumbWithButton.Render(),descriptionList.Render(),tabs.RenderNav(),tabs.RenderContent(),pagination.Render(),Forms1.normal(),Forms1.horizontal(),Forms1.inlineForm()]),{
+     return Doc.RunById("main",Doc.Concat(List.ofArray([_fork_me_on_github,Container.Render(Container.Create2(List.ofArray([rowButtons.Render(),breadcrumbBar.Render(),rowBreadcrumbWithButton.Render(),descriptionList.Render(),tabs.RenderNav(),tabs.RenderContent(),pagination.Render(),Forms1.normal(),Forms1.horizontal(),Forms1.inlineForm()]),{
       $:0
      }))])));
     })
