@@ -2,4 +2,4 @@ packages/*
 WebSharperBootstrap/bin/*
 WebSharperBootstrap/Content/*
 WebSharperBootstrap/obj/*
-WebSharperBootrap_ghpages
+gh-pages
