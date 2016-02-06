@@ -7,4 +7,7 @@ Bootstrap component implemented in __Bootstrap.fs__:
   - Breadcrumb
   - Definition list
   - Nav tabs
-  - more to come...
+  - Forms
+  - Labels
+  - Buttons
+  - more to come
