@@ -53,24 +53,24 @@ module Client =
                   DescriptionTerm.Create("Custom div", p [ strong [ text "Hehe " ]
                                                            small [ text "hoho" ] ]) ],
                 DescriptionOrientation.Horizontal)
-
+    
         let tabs =
             NavTabs.Create()
                    .Justify(true)
-                   .WithType(Pill Vertical)
+                   .WithType(Pill PillStack.Horizontal)
                    .WithTabs(
                         [ NavTab.Create("home")
                                 .WithTitle("Home")
-                                .WithContent(text "Home page here.")
+                                .WithContent(divAttr [ attr.``class`` "well" ] [ text "Home page here." ])
                                 .WithState(NavTabState.Active)
 
                           NavTab.Create("account")
                                 .WithTitle("Account")
-                                .WithContent(text "Account page here.")
+                                .WithContent(divAttr [ attr.``class`` "well" ] [ text "Home page here." ])
                   
                           NavTab.Create("profile")
                                 .WithTitle("Profile")
-                                .WithContent(text "Profile page here.")
+                                .WithContent(divAttr [ attr.``class`` "well" ] [ text "Profile page here." ])
 
                           NavTab.Create("hello")
                                 .WithTitle("Hello")
@@ -90,7 +90,7 @@ module Client =
               breadcrumbBar.Render()
               rowBreadcrumbWithButton.Render()
               descriptionList.Render()
-              tabs.RenderNav()
+              tabs.RenderTabs()
               tabs.RenderContent()
               pagination.Render()
               Forms.normal

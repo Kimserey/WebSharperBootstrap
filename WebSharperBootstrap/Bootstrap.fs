@@ -353,7 +353,7 @@ module Bootstrap =
                                         | Pill Horizontal -> "nav-pills"
                                         | Pill Vertical -> "nav-pills nav-stacked")) ]
                    (x.Tabs |> List.map NavTab.RenderTab |> Seq.cast)
-        member x.RenderNav() = NavTabs.RenderTabs x
+        member x.RenderTabs() = NavTabs.RenderTabs x
         /// Renders the content link to the tabs.
         static member RenderContent x =
             divAttr [ attr.``class`` "tab-content" ] (x.Tabs |> List.map NavTab.RenderContent |> Seq.cast)
