@@ -19973,7 +19973,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
     Main:Runtime.Field(function()
     {
      var ats,arg20,_fork_me_on_github,button,hyperlink,rowButtons,breadcrumbBar,_b,rowBreadcrumbWithButton,descriptionList,arg201,arg202,arg203,tabs,pagination;
-     ats=List.ofArray([AttrProxy.Create("href","https://github.com/Kimserey/BootstrapWebSharper")]);
+     ats=List.ofArray([AttrProxy.Create("href","https://github.com/Kimserey/WebSharperBootstrap")]);
      arg20=List.ofArray([Doc.Element("img",List.ofArray([AttrProxy.Create("style","position: absolute; top: 0; right: 0; border: 0;"),AttrProxy.Create("src","https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"),AttrProxy.Create("alt","Fork me on GitHub"),AttrProxy.Create("data-"+"canonical-src","https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png")]),Runtime.New(T,{
       $:0
      }))]);
