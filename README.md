@@ -12,3 +12,5 @@ Bootstrap component implemented in __Bootstrap.fs__:
   - Labels
   - Buttons
   - more to come
+
+![preview](https://raw.githubusercontent.com/Kimserey/WebSharperBootstrap/master/elements.png)
