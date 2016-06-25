@@ -13,4 +13,6 @@ Bootstrap component implemented in __Bootstrap.fs__:
   - Buttons
   - more to come
 
+__Preview__
+
 ![preview](https://raw.githubusercontent.com/Kimserey/WebSharperBootstrap/master/elements.png)
